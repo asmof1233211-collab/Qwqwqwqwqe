@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#edf3f5">
+<title>دِراستي</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#edf3f5;--card:#fff;--ink:#203747;--muted:#718493;--blue:#527f91;--blue2:#dceaf0;--lav:#e9eafa;--line:#e7edf0;--green:#5c9385}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;padding:env(safe-area-inset-top) 14px calc(82px + env(safe-area-inset-bottom));}
+main{max-width:620px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;padding:20px 4px 14px}.eyebrow{font-size:12px;color:var(--muted)}h1{font-size:27px;margin:4px 0 0}.logo{width:48px;height:48px;border-radius:17px;background:var(--blue2);display:grid;place-items:center;font-size:24px}
+.card{background:var(--card);border-radius:21px;padding:17px;margin:12px 0;box-shadow:0 4px 18px #2c52600b}.hero{background:linear-gradient(135deg,#fff,#e7f0f4)}h2{font-size:17px;margin:0 0 13px}.muted{color:var(--muted);font-size:13px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}.stat{padding:13px;border-radius:15px;background:#eaf2f5}.stat:nth-child(2){background:#f0effa}.num{font-size:24px;font-weight:750;margin:3px 0}.progress{height:8px;background:#e8eef1;border-radius:20px;overflow:hidden;margin:10px 0}.progress span{height:100%;display:block;background:var(--green);width:0;transition:.2s}
+button,input,select,textarea{font:inherit}button{border:0;border-radius:13px;padding:11px 14px;background:var(--blue);color:#fff;font-weight:650;cursor:pointer}button.secondary{background:#edf3f5;color:var(--ink)}button.ghost{background:transparent;color:var(--blue);padding:7px}button:disabled{opacity:.45}
+.task{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.task:last-child{border:0}.task input{width:19px;height:19px;accent-color:var(--green)}.task.done span{text-decoration:line-through;color:#9aa8b0}
+.field{width:100%;border:1px solid var(--line);background:#fbfdfe;border-radius:12px;padding:12px;color:var(--ink);margin:5px 0 10px;outline-color:var(--blue)}.row{display:flex;gap:8px;align-items:center}.row>*{min-width:0}.row input{flex:1}.timer{text-align:center;padding:8px}.time{font-size:43px;font-weight:750;color:var(--blue);font-variant-numeric:tabular-nums;margin:5px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tile{background:#edf3f5;border-radius:15px;padding:14px;text-align:right;color:var(--ink)}.tile b{display:block;margin-top:8px}.hidden{display:none!important}.nav{position:fixed;bottom:0;left:0;right:0;background:#ffffffed;backdrop-filter:blur(12px);padding:9px 8px calc(9px + env(safe-area-inset-bottom));display:flex;justify-content:center;gap:5px;border-top:1px solid var(--line);z-index:5}.nav button{background:transparent;color:var(--muted);font-size:11px;flex:1;max-width:120px;padding:8px 2px}.nav button.active{background:var(--blue2);color:#315d70}.nav i{display:block;font-style:normal;font-size:19px;margin-bottom:3px}.notice{font-size:12px;color:var(--muted);line-height:1.7;background:#f4f7f8;border-radius:12px;padding:10px}.q{padding:13px 0;border-bottom:1px solid var(--line)}.q label{display:block;padding:8px;margin:6px 0;background:#f5f8f9;border-radius:10px}.tag{font-size:11px;color:var(--blue);background:var(--blue2);padding:5px 9px;border-radius:20px}
+</style>
+</head>
+<body>
+<main>
+<header class="top"><div><div class="eyebrow">مساحتك للتعلّم والإنجاز</div><h1>دِراستي <span style="color:#6e9aaa">✦</span></h1></div><div class="logo">🎓</div></header>
+
+<section id="home" class="page">
+ <div class="card hero"><div class="eyebrow" id="today"></div><h2 style="font-size:22px;margin:7px 0">أهلاً بك 👋</h2><div class="muted">كل خطوة صغيرة تقرّبك من هدفك.</div>
+ <div class="stats"><div class="stat"><div class="muted">مهام مكتملة</div><div class="num" id="statDone">0/0</div></div><div class="stat"><div class="muted">المهام المتبقية</div><div class="num" id="statLeft">0</div></div></div></div>
+ <div class="card"><h2>إنجاز اليوم</h2><div class="row" style="justify-content:space-between"><span class="muted">تقدمك في المهام</span><b id="percent">0%</b></div><div class="progress"><span id="bar"></span></div></div>
+ <div class="card"><h2>مهام الدراسة</h2><div id="taskList"></div><div class="row" style="margin-top:10px"><input id="taskInput" class="field" placeholder="أضف مهمة جديدة" style="margin:0"><button id="addTask">إضافة</button></div></div>
+ <div class="card"><h2>اختصارات</h2><div class="grid"><button class="tile" data-go="schedule">📅<b>جدول الدراسة</b></button><button class="tile" data-go="focus">⏱️<b>مؤقت التركيز</b></button><button class="tile" data-go="exams">📝<b>الاختبارات</b></button><button class="tile" data-go="ai">✨<b>اشرح لي درساً</b></button></div></div>
+</section>
+
+<section id="schedule" class="page hidden">
+ <div class="card"><h2>جدول الدراسة</h2><div class="muted">أضف حصصك الدراسية، وستبقى محفوظة على هذا الجهاز.</div>
+ <input id="sSubject" class="field" placeholder="المادة"><input id="sTime" class="field" type="time"><input id="sNote" class="field" placeholder="عنوان الدرس (اختياري)"><button id="addSchedule">إضافة إلى الجدول</button><div id="scheduleList" style="margin-top:12px"></div></div>
+</section>
+
+<section id="focus" class="page hidden">
+ <div class="card timer"><h2>مؤقت التركيز</h2><div class="muted">اختر مدة الجلسة وابدأ</div><div class="time" id="clock">25:00</div><select id="duration" class="field"><option value="15">15 دقيقة</option><option value="25" selected>25 دقيقة</option><option value="45">45 دقيقة</option><option value="60">60 دقيقة</option></select><div class="row" style="justify-content:center"><button id="startTimer">ابدأ</button><button class="secondary" id="resetTimer">إعادة ضبط</button></div><p class="muted" id="timerState">جاهز لجلسة جديدة</p></div>
+</section>
+
+<section id="exams" class="page hidden">
+ <div class="card"><h2>الاختبارات التدريبية</h2><p class="muted">تدريب عام لمراجعة المعلومات. ليست هذه نسخة من أرشيف رسمي للأسئلة الوزارية.</p><label class="muted">اختر المادة</label><select id="examSubject" class="field"><option>الفيزياء</option><option>الكيمياء</option><option>الأحياء</option><option>الرياضيات</option><option>اللغة العربية</option><option>اللغة الإنجليزية</option><option>الإسلامية</option></select><div class="notice">يمكنك إرسال اسم المادة والموضوع إلى المساعد الذكي لإنشاء اختبار مناسب لمنهجك.</div><button style="margin-top:12px" id="makeQuiz">إنشاء اختبار تدريبي بالذكاء الاصطناعي</button><div id="quizResult" class="muted" style="margin-top:12px"></div></div>
+</section>
+
+<section id="ai" class="page hidden">
+ <div class="card"><h2>المساعد الدراسي الذكي ✨</h2><p class="muted">اكتب سؤالك أو اسم الدرس، وسنفتح ChatGPT مع طلب جاهز. يلزم اتصال بالإنترنت وتسجيل الدخول إلى ChatGPT.</p><label class="muted">المادة</label><select id="aiSubject" class="field"><option>الفيزياء</option><option>الكيمياء</option><option>الأحياء</option><option>الرياضيات</option><option>اللغة العربية</option><option>اللغة الإنجليزية</option><option>الإسلامية</option></select><textarea id="aiQuestion" class="field" rows="4" placeholder="اكتب الدرس أو السؤال هنا..."></textarea><button id="askAI">اشرح لي الدرس</button><p class="notice">لا تضع كلمات مرور أو معلومات شخصية. هذه النسخة لا تتصل بمفتاح API ولا ترسل بياناتك إلى خادم خاص.</p></div>
+</section>
+
+<section id="files" class="page hidden">
+ <div class="card"><h2>ملخصاتي وملفاتي</h2><p class="muted">أضف ملاحظاتك واحفظها محلياً على جهازك.</p><input id="noteTitle" class="field" placeholder="عنوان الملخص"><textarea id="noteBody" class="field" rows="5" placeholder="اكتب ملخصك هنا..."></textarea><button id="saveNote">حفظ الملخص</button><div id="notesList" style="margin-top:12px"></div></div>
+ <div class="card"><h2>الملفات</h2><input id="fileInput" type="file" class="field" multiple><div class="notice">الملفات المختارة لا تُرفع إلى الإنترنت في هذه النسخة. لحفظ ملفات كبيرة بشكل دائم نحتاج إضافة تخزين ملفات مخصص.</div><div id="fileNames" class="muted"></div></div>
+</section>
+</main>
+<nav class="nav"><button class="active" data-go="home"><i>⌂</i>الرئيسية</button><button data-go="schedule"><i>▦</i>الجدول</button><button data-go="focus"><i>◷</i>التركيز</button><button data-go="exams"><i>✓</i>الاختبارات</button><button data-go="files"><i>▤</i>ملفاتي</button></nav>
+<script>
+const $=id=>document.getElementById(id);
+const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
+const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+let tasks=load('tasks',[{t:'مراجعة درس اليوم',done:false},{t:'حل أسئلة الكتاب',done:false},{t:'مراجعة التعاريف',done:false}]);
+let schedule=load('schedule',[]),notes=load('notes',[]);
+function renderTasks(){ $('taskList').innerHTML=''; tasks.forEach((x,i)=>{let row=document.createElement('div');row.className='task'+(x.done?' done':'');let cb=document.createElement('input');cb.type='checkbox';cb.checked=x.done;cb.onchange=()=>{tasks[i].done=cb.checked;save('tasks',tasks);renderTasks()};let sp=document.createElement('span');sp.textContent=x.t;sp.style.flex='1';let del=document.createElement('button');del.className='ghost';del.textContent='حذف';del.onclick=()=>{tasks.splice(i,1);save('tasks',tasks);renderTasks()};row.append(cb,sp,del);$('taskList').append(row)});let d=tasks.filter(x=>x.done).length,p=tasks.length?Math.round(d/tasks.length*100):0;$('statDone').textContent=d+'/'+tasks.length;$('statLeft').textContent=tasks.length-d;$('percent').textContent=p+'%';$('bar').style.width=p+'%'}
+$('addTask').onclick=()=>{let t=$('taskInput').value.trim();if(!t)return;tasks.push({t,done:false});save('tasks',tasks);$('taskInput').value='';renderTasks()};
+function renderSchedule(){$('scheduleList').innerHTML='';schedule.sort((a,b)=>a.time.localeCompare(b.time)).forEach((x,i)=>{let d=document.createElement('div');d.className='task';let sp=document.createElement('span');sp.textContent=x.time+' · '+x.subject+(x.note?' — '+x.note:'');sp.style.flex='1';let del=document.createElement('button');del.className='ghost';del.textContent='حذف';del.onclick=()=>{schedule.splice(i,1);save('schedule',schedule);renderSchedule()};d.append(sp,del);$('scheduleList').append(d)})}
+$('addSchedule').onclick=()=>{let subject=$('sSubject').value.trim(),time=$('sTime').value;if(!subject||!time){alert('اكتب المادة والوقت أولاً');return}schedule.push({subject,time,note:$('sNote').value.trim()});save('schedule',schedule);$('sSubject').value='';$('sTime').value='';$('sNote').value='';renderSchedule()};
+function renderNotes(){$('notesList').innerHTML='';notes.forEach((n,i)=>{let d=document.createElement('div');d.className='task';let s=document.createElement('span');s.style.flex='1';s.textContent=n.title+' — '+n.body;let b=document.createElement('button');b.className='ghost';b.textContent='حذف';b.onclick=()=>{notes.splice(i,1);save('notes',notes);renderNotes()};d.append(s,b);$('notesList').append(d)})}
+$('saveNote').onclick=()=>{let title=$('noteTitle').value.trim(),body=$('noteBody').value.trim();if(!title||!body){alert('أضف عنواناً ومحتوى للملخص');return}notes.unshift({title,body});save('notes',notes);$('noteTitle').value='';$('noteBody').value='';renderNotes()};
+$('fileInput').onchange=e=>$('fileNames').textContent=Array.from(e.target.files).map(f=>f.name).join('، ');
+let remaining=25*60,interval=null;function showTime(){$('clock').textContent=String(Math.floor(remaining/60)).padStart(2,'0')+':'+String(remaining%60).padStart(2,'0')}
+$('duration').onchange=()=>{stopTimer();remaining=Number($('duration').value)*60;showTime()};
+function stopTimer(){if(interval){clearInterval(interval);interval=null}$('startTimer').textContent='ابدأ'}
+$('startTimer').onclick=()=>{if(interval){stopTimer();$('timerState').textContent='تم إيقاف الجلسة';return}$('startTimer').textContent='إيقاف مؤقت';$('timerState').textContent='أحسنت، ركّز على مهمتك';interval=setInterval(()=>{remaining--;showTime();if(remaining<=0){stopTimer();$('timerState').textContent='انتهت الجلسة! خذ استراحة قصيرة.';if('vibrate'in navigator)navigator.vibrate?.([150,80,150]);}},1000)};
+$('resetTimer').onclick=()=>{stopTimer();remaining=Number($('duration').value)*60;showTime();$('timerState').textContent='جاهز لجلسة جديدة'};
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('hidden',p.id!==id));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.go===id));window.scrollTo(0,0)}
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+$('askAI').onclick=()=>{let q=$('aiQuestion').value.trim();if(!q){alert('اكتب اسم الدرس أو السؤال');return}let prompt='اشرح لي هذا الموضوع للطالب بطريقة مبسطة ومنظمة، مع أمثلة وأسئلة للمراجعة. المادة: '+$('aiSubject').value+'. الموضوع أو السؤال: '+q;location.href='https://chatgpt.com/?q='+encodeURIComponent(prompt)};
+$('makeQuiz').onclick=()=>{let s=$('examSubject').value;let prompt='أنشئ لي اختباراً تدريبياً من 10 أسئلة اختيار من متعدد في مادة '+s+' للمنهج العراقي، مستوى السادس الإعدادي. لا تدّع أن الأسئلة وزارية أصلية، واذكر الإجابات والتفسير بعد إجابتي.';location.href='https://chatgpt.com/?q='+encodeURIComponent(prompt)};
+$('today').textContent=new Intl.DateTimeFormat('ar-IQ',{weekday:'long',day:'numeric',month:'long'}).format(new Date());
+renderTasks();renderSchedule();renderNotes();showTime();
+if('serviceWorker'in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>
